@@ -1,0 +1,2 @@
+recursive-include ntnu_problem_types/templates *
+recursive-include ntnu_problem_types/static *

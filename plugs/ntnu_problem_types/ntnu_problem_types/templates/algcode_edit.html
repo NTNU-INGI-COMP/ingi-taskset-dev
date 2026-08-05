@@ -1,0 +1,67 @@
+{# Reuse the template code from the "code" problem type rendering, as to not need to define the standard fields again. #}
+{{ base_code_edit_render | safe }}
+
+<div class="form-group row">
+    <label for="test_file-PID" class="col-sm-2 control-label">Test file</label>
+    <div class="col-sm-10">
+        <input type="text" class="form-control" id="test_file-PID" name="problem[PID][test_file]" placeholder="File for running tests (relative to /student/)"/>
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="memory_limit-PID" class="col-sm-2 control-label">Memory limit (Megabytes)</label>
+    <div class="col-sm-10">
+        <input type="number" class="form-control" id="memory_limit-PID" name="problem[PID][memory_limit]" placeholder="Same as container"/>
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="time_limit-PID" class="col-sm-2 control-label">Time limit (seconds)</label>
+    <div class="col-sm-10">
+        <input type="number" class="form-control" id="time_limit-PID" name="problem[PID][time_limit]" placeholder="Same as container"/>
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="template-default-PID" class="col-sm-2 control-label">Use default template?</label>
+    <div class="col-sm-10">
+        <div class="checkbox"><label>
+            <input type="checkbox" id="template-default-PID" name="problem[PID][template][default]"/>&nbsp;
+        </label></div>
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="template-source-PID" class="col-sm-2 control-label">Template file</label>
+    <div class="col-sm-10">
+        <input type="text" class="form-control" id="template-source-PID" name="problem[PID][template][source]" placeholder="Template file (relative to task)"/>
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="template-output-PID" class="col-sm-2 control-label">Template destination</label>
+    <div class="col-sm-10">
+        <input type="text" class="form-control" id="template-output-PID" name="problem[PID][template][output]" placeholder="Template file destination (relative to /student/)"/>
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="weight-PID" class="col-sm-2 control-label">Problem score weight</label>
+    <div class="col-sm-10">
+        <input type="number" class="form-control" id="weight-PID" name="problem[PID][weight]" placeholder="1.0"/>
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="highscore_test_file-PID" class="col-sm-2 control-label">Highscore test file</label>
+    <div class="col-sm-10">
+        <input type="text" class="form-control" id="highscore_test_file-PID" name="problem[PID][highscore_test_file]" placeholder="File for running highscore tests (relative to /student/)"/>
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="highscore_runs-PID" class="col-sm-2 control-label">Number of highscore test file executions</label>
+    <div class="col-sm-10">
+        <input type="number" class="form-control" id="highscore_runs-PID" name="problem[PID][highscore_runs]" placeholder="Default: 5 (score is average of all but the best and worst individual scores)"/>
+    </div>
+</div>

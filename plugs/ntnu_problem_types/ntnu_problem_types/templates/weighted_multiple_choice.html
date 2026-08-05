@@ -1,0 +1,13 @@
+{# Modified version of the multiple_weight.html file that is part of INGInious. #}
+{# See INGInious for more information about COPYRIGHT and LIMITATIONS #}
+
+<div id="task_alert_{{pid}}" class="task_alert_problem"></div>
+{{ header | safe }}
+{% for choice in choices %}
+    <div class="form-check">
+        <input class="form-check-input" type="{% if checkbox %}checkbox{% else %}radio{% endif %}" name="{{pid}}" value="{{choice['index']}}" id="{{pid}}}_{{choice['index']}}" data-optional="True"/>
+        <label class="form-check-label" for="{{pid}}_{{choice['index']}}">
+            {{ func(choice['text']) | safe }}
+        </label>
+    </div>
+{% endfor %}

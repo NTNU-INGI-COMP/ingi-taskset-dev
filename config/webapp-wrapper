@@ -1,0 +1,7 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import inginious.frontend.wsgi.webapp as webapp
+
+application = webapp.application
+close_app_func = webapp.close_app_func

@@ -1,0 +1,6 @@
+.env
+data/db/
+data/logs/
+data/backups/
+data/tasks/*
+!data/tasks/.gitkeep

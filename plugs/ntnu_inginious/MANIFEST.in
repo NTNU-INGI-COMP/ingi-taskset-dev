@@ -1,0 +1,2 @@
+recursive-include ntnu_inginious/static *
+recursive-include ntnu_inginious/templates *

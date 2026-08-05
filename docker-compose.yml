@@ -1,0 +1,103 @@
+name: ingi-dev
+
+x-core: &core
+  build:
+    context: .
+    target: core
+    args:
+      INGI_REPO: ${INGI_REPO}
+      INGI_REF: ${INGI_REF}
+  restart: unless-stopped
+  networks: [inginious]
+
+services:
+  db:
+    image: mongo:6.0.2
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ingi
+      MONGO_INITDB_ROOT_PASSWORD: ingi
+    volumes:
+      - ./data/db:/data/db
+    restart: unless-stopped
+    networks: [inginious]
+
+  backend:
+    <<: *core
+    environment:
+      AGENT: tcp://0.0.0.0:2001
+      CLIENT: tcp://0.0.0.0:2000
+    command: sh -c "python3 -m inginious.scripts.backend $$AGENT $$CLIENT"
+
+  agent-docker:
+    <<: *core
+    depends_on: [backend]
+    environment:
+      BACKEND: tcp://backend:2001
+    command: sh -c "python3 -m inginious.scripts.agent_docker $$BACKEND --tmpdir=/tmp/agent_data/"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${TASKS_DIR}:/inginious/tasks
+      - ./data/backups:/inginious/backups
+      # Path must match on host and in the agent: grading containers are siblings
+      - /tmp/agent_data/:/tmp/agent_data/
+
+  agent-mcq:
+    <<: *core
+    depends_on: [backend]
+    environment:
+      BACKEND: tcp://backend:2001
+    command: sh -c "python3 -m inginious.scripts.agent_mcq $$BACKEND"
+    volumes:
+      - ${TASKS_DIR}:/inginious/tasks
+      - ./data/backups:/inginious/backups
+      - /tmp/agent_data/:/tmp/agent_data/
+
+  frontend:
+    build:
+      context: .
+      target: frontend
+      args:
+        INGI_REPO: ${INGI_REPO}
+        INGI_REF: ${INGI_REF}
+    depends_on: [db, backend, agent-docker, agent-mcq]
+    environment:
+      INGINIOUS_WEBAPP_CONFIG: /inginious/configuration.yaml
+      ADMIN_USER: ${ADMIN_USER}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+    volumes:
+      - ./configuration.yaml:/inginious/configuration.yaml:ro
+      - ${TASKS_DIR}:/inginious/tasks:rw
+      - ./data/backups:/inginious/backups:rw
+      - ./data/logs:/inginious/logs:rw
+    ports:
+      - "${HTTP_PORT}:8000"
+    restart: unless-stopped
+    networks: [inginious]
+
+  # Grading environments. Exit immediately; they exist to put the images on the host.
+  env-default:
+    image: ghcr.io/inginious/env-default:latest
+    command: /bin/true
+    networks: [inginious]
+
+  env-python3:
+    image: ghcr.io/inginious/env-python3:latest
+    command: /bin/true
+    networks: [inginious]
+
+  c-grader:
+    profiles: [ntnu-graders]
+    image: inginious-graders/c-grader
+    build: graders/c-grader
+    command: /bin/true
+    networks: [inginious]
+
+  pulp-grader:
+    profiles: [ntnu-graders]
+    image: inginious-graders/pulp-grader
+    build: graders/pulp-grader
+    command: /bin/true
+    networks: [inginious]
+
+networks:
+  inginious:

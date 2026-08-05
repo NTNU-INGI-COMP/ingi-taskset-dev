@@ -1,0 +1,56 @@
+.algfig {
+    border-left: 8px solid #eeeeee;
+    padding: 16px 24px;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.algfig + .algfig {
+    margin-top: -1rem;
+    padding-top: 0;
+}
+
+.alert p.last {
+    margin-bottom: 0;
+}
+
+.alert-info a,
+.alert-warning a,
+.alert-danger a,
+.alert-success a,
+.alert-dark a,
+.alert-primary a {
+    font-weight: normal;
+    color: #ffffff !important;
+    text-decoration: underline;
+}
+
+.alert-light a,
+.alert-secondary a {
+    font-weight: normal;
+    color: #000000 !important;
+    text-decoration: underline;
+}
+
+.alghint-button {
+    background-color: #d1edf6;
+    border-radius: 4px;
+    padding: 0.5em 0.75em;
+    display: inline-block;
+    margin-bottom: 1em;
+    margin-left: 0.5em;
+    border: 1px solid #b7cfd7;
+}
+
+.alghint-button:hover {
+    cursor: pointer;
+    background-color: #c0e3f3;
+}
+
+.alghint-button:hover ~ .alghint {
+    display: block;
+}
+
+.alghint, .alghint-text {
+    display: none;
+}

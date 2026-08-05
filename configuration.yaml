@@ -1,0 +1,34 @@
+allow_deletion: false
+# On, unlike production: auth.html only renders the username/password form when
+# registration is allowed, and there is no LDAP/Feide auth method here to replace it
+allow_registration: true
+backend: tcp://backend:2000
+backup_directory: /inginious/backups
+log_level: INFO
+local-config:
+    debug_host: localhost
+    tmp_dir: /inginious/agent_tmp
+mongo_opt:
+    database: INGInious
+    host: mongodb://ingi:ingi@db:27017
+plugins:
+- plugin_module: ntnu_inginious.fixes
+- plugin_module: inginious.frontend.plugins.scoreboard
+- plugin_module: ntnu_problem_types
+- plugin_module: inginious_katex
+session_parameters:
+  cookie_name: inginious_session_id
+  cookie_domain: null
+  cookie_path: null
+  samesite: Strict
+  timeout: 604800
+  ignore_change_ip: true
+  httponly: true
+  secret_key: dev-only-session-key
+  secure: false
+superadmins:
+- superadmin
+tasks_directory: /inginious/tasks
+use_minified_js: false
+reverse-proxy-config:
+    enable: false
