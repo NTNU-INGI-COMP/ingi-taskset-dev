@@ -38,3 +38,11 @@ invocation (`HTTP_PORT=9000 docker compose up -d`).
 ```sh
 docker compose up -d --build
 ```
+
+## Scoreboard
+
+`plugs/ntnu_inginious/ntnu_inginious/scoreboard.py` is enabled instead of
+`inginious.frontend.plugins.scoreboard`, since it registers the same pages. It
+reuses the INGInious scoreboard and, below it, shows logged in users a table
+with their own private attempts (`custom.private_score`, from
+`highscore = "private"` in the tdt4120-inginious graders).
