@@ -1,0 +1,31 @@
+{# The scoreboard from INGInious, with all the attempts of the logged in user below it #}
+{% extends "scoreboard_upstream/scoreboard.html" %}
+
+{% block content %}
+{{ super() }}
+
+{% if g.attempts_table %}
+    <h3 class="mt-4"><i class="fa fa-user"></i> Dine forsøk</h3>
+    <p>
+        Forsøkene dine med <code>highscore = True</code> og
+        <code>highscore = "private"</code>. Bare du kan se denne tabellen, og
+        bare forsøk med <code>highscore = True</code> vises på poengtavlen over.
+    </p>
+    <table class="table table-hover">
+        <tr>
+            <th></th>
+            <th>Levert</th>
+            <th>Synlighet</th>
+            <th class="table-info">Score</th>
+        </tr>
+        {% for submitted_on, score, private in g.attempts_table %}
+            <tr>
+                <td>{{loop.index}}</td>
+                <td>{{submitted_on}}</td>
+                <td>{{"Privat" if private else "Offentlig"}}</td>
+                <td class="table-info">{{score}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+{% endblock %}
