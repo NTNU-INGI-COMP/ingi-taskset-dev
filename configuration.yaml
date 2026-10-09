@@ -13,7 +13,7 @@ mongo_opt:
     host: mongodb://ingi:ingi@db:27017
 plugins:
 - plugin_module: ntnu_inginious.fixes
-- plugin_module: inginious.frontend.plugins.scoreboard
+- plugin_module: ntnu_inginious.scoreboard
 - plugin_module: ntnu_problem_types
 - plugin_module: inginious_katex
 session_parameters:
